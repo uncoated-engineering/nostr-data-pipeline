@@ -1,7 +1,7 @@
 """Configuration management for Nostr pipeline."""
 
-from typing import List
-from pydantic import Field
+from typing import List, Union
+from pydantic import Field, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -26,6 +26,15 @@ class Settings(BaseSettings):
         ],
         description="List of Nostr relay WebSocket URLs",
     )
+
+    @field_validator('nostr_relays', mode='before')
+    @classmethod
+    def parse_relay_list(cls, v: Union[str, List[str]]) -> List[str]:
+        """Parse comma-separated relay URLs or return list as-is."""
+        if isinstance(v, str):
+            # Split by comma and strip whitespace
+            return [relay.strip() for relay in v.split(',') if relay.strip()]
+        return v
 
     # Database Configuration
     database_url: str = Field(
