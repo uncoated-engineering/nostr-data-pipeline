@@ -82,7 +82,7 @@ class EventProcessor:
                 "lud16": content.get("lud16"),
                 "banner": content.get("banner"),
                 "website": content.get("website"),
-                "raw_metadata": content,
+                "profile_metadata": content,
             }
         except json.JSONDecodeError:
             return None

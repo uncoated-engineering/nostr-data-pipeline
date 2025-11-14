@@ -61,7 +61,7 @@ class UserProfile(Base):
     lud16 = Column(String(255), nullable=True)  # Lightning address
     banner = Column(String(512), nullable=True)
     website = Column(String(512), nullable=True)
-    metadata = Column(JSON, nullable=True)  # Full metadata JSON
+    profile_metadata = Column(JSON, nullable=True)  # Full metadata JSON
     first_seen = Column(DateTime, default=datetime.utcnow)
     last_updated = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     event_count = Column(Integer, default=0)  # Total events by this user
