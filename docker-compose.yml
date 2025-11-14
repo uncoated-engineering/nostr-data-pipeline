@@ -57,6 +57,28 @@ services:
         nostr-pipeline run
       "
 
+  dashboard:
+    build: .
+    container_name: nostr-dashboard
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://nostr:nostr@postgres:5432/nostr_pipeline
+    volumes:
+      - ./src:/app/src
+      - ./dashboard:/app/dashboard
+    ports:
+      - "8501:8501"
+    restart: unless-stopped
+    command: >
+      sh -c "
+        echo 'Starting dashboard...' &&
+        sleep 10 &&
+        cd /app/dashboard &&
+        streamlit run Home.py --server.port=8501 --server.address=0.0.0.0
+      "
+
 volumes:
   postgres_data:
   redis_data:

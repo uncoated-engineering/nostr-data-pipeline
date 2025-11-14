@@ -24,6 +24,13 @@ A real-time ETL (Extract, Transform, Load) pipeline for streaming and analyzing 
 - **Content Quality**: Heuristic-based content quality assessment
 - **Network Statistics**: Aggregate network-wide metrics and growth rates
 
+### Interactive Web Dashboard 🎨
+- **Real-Time Visualizations**: Beautiful, interactive charts and graphs powered by Plotly
+- **Multiple Views**: Overview, Trending, Network, Users, Relays, and Zaps pages
+- **Live Updates**: Auto-refresh capabilities for real-time monitoring
+- **Responsive Design**: Modern UI that works on desktop and mobile
+- **Easy Navigation**: Intuitive multi-page dashboard with sidebar navigation
+
 ### Rich CLI Interface
 - **Pipeline Control**: Start/stop the ETL pipeline
 - **Live Statistics**: View network stats, trending topics, and top content
@@ -150,6 +157,30 @@ nostr-pipeline run
 ```
 
 ## Usage
+
+### Web Dashboard
+
+Access the interactive dashboard for real-time visualizations:
+
+```bash
+# With Docker
+docker-compose up -d
+# Dashboard available at http://localhost:8501
+
+# Or run locally
+make dashboard
+# Opens browser at http://localhost:8501
+```
+
+**Dashboard Pages:**
+- 📈 **Overview**: Network statistics and key metrics
+- 🔥 **Trending**: Trending hashtags and viral content
+- 📡 **Network**: Real-time activity and timelines
+- 👥 **Users**: Top users and leaderboards
+- 🌐 **Relays**: Relay health and performance
+- ⚡ **Zaps**: Lightning Network analytics
+
+See [DASHBOARD.md](DASHBOARD.md) for detailed documentation.
 
 ### Pipeline Commands
 

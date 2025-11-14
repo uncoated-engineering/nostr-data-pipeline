@@ -1,4 +1,4 @@
-.PHONY: help install dev-install test lint format clean docker-build docker-up docker-down run init-db stats
+.PHONY: help install dev-install test lint format clean docker-build docker-up docker-down run init-db stats dashboard
 
 help:
 	@echo "Nostr Data Pipeline - Make Commands"
@@ -15,7 +15,7 @@ help:
 	@echo ""
 	@echo "Docker:"
 	@echo "  make docker-build Build Docker image"
-	@echo "  make docker-up    Start all services"
+	@echo "  make docker-up    Start all services (pipeline + dashboard)"
 	@echo "  make docker-down  Stop all services"
 	@echo "  make docker-logs  View logs"
 	@echo ""
@@ -24,6 +24,9 @@ help:
 	@echo "  make run          Run the pipeline"
 	@echo "  make stats        Show network statistics"
 	@echo "  make trending     Show trending hashtags"
+	@echo ""
+	@echo "Dashboard:"
+	@echo "  make dashboard    Run dashboard locally (http://localhost:8501)"
 
 install:
 	pip install -r requirements.txt
@@ -82,3 +85,8 @@ stats:
 
 trending:
 	nostr-pipeline trending --hours 24 --limit 20
+
+dashboard:
+	@echo "Starting dashboard at http://localhost:8501"
+	@echo "Press Ctrl+C to stop"
+	cd dashboard && streamlit run Home.py
