@@ -6,7 +6,7 @@ from typing import Dict, Any, List
 from collections import defaultdict
 import structlog
 from sqlalchemy.orm import Session
-from sqlalchemy import func
+from sqlalchemy import func, cast, Text
 
 from nostr_pipeline.models import (
     NostrEvent,
@@ -114,10 +114,11 @@ class MetricsAggregator:
         zap_total_sats = sum(z.amount_sats for z in zaps)
 
         # Count replies
+        # Use cast to text + LIKE since PostgreSQL doesn't support LIKE on JSON columns
         reply_count = (
             session.query(NostrEvent)
             .filter(NostrEvent.kind == 1)
-            .filter(NostrEvent.tags.contains([["e", event_id]]))
+            .filter(cast(NostrEvent.tags, Text).like(f'%["e", "{event_id}"]%'))
             .count()
         )
 
@@ -125,7 +126,7 @@ class MetricsAggregator:
         repost_count = (
             session.query(NostrEvent)
             .filter(NostrEvent.kind == 6)
-            .filter(NostrEvent.tags.contains([["e", event_id]]))
+            .filter(cast(NostrEvent.tags, Text).like(f'%["e", "{event_id}"]%'))
             .count()
         )
 
@@ -133,7 +134,7 @@ class MetricsAggregator:
         reaction_count = (
             session.query(NostrEvent)
             .filter(NostrEvent.kind == 7)
-            .filter(NostrEvent.tags.contains([["e", event_id]]))
+            .filter(cast(NostrEvent.tags, Text).like(f'%["e", "{event_id}"]%'))
             .count()
         )
 
