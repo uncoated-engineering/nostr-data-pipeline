@@ -71,12 +71,12 @@ try:
                     hover_data=['Zap Count', 'Avg Zap']
                 )
                 fig.update_layout(yaxis={'categoryorder': 'total ascending'}, height=500)
-                st.plotly_chart(fig, use_container_width=True)
+                st.plotly_chart(fig, width="stretch")
 
             with col2:
                 st.dataframe(
                     recipients_df,
-                    use_container_width=True,
+                    width="stretch",
                     hide_index=True,
                     height=500,
                     column_config={
@@ -134,7 +134,7 @@ try:
                     color_continuous_scale='Viridis'
                 )
                 fig_creators.update_layout(height=400)
-                st.plotly_chart(fig_creators, use_container_width=True)
+                st.plotly_chart(fig_creators, width="stretch")
 
             with col2:
                 fig_pie = px.pie(
@@ -144,11 +144,11 @@ try:
                     title='Sats Distribution (Top 10 Creators)'
                 )
                 fig_pie.update_layout(height=400)
-                st.plotly_chart(fig_pie, use_container_width=True)
+                st.plotly_chart(fig_pie, width="stretch")
 
             st.dataframe(
                 creators_df,
-                use_container_width=True,
+                width="stretch",
                 hide_index=True,
                 column_config={
                     "Posts": st.column_config.NumberColumn(format="%d"),

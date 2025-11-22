@@ -101,7 +101,7 @@ try:
                 }
             ))
             fig_users.update_layout(height=300)
-            st.plotly_chart(fig_users, use_container_width=True)
+            st.plotly_chart(fig_users, width="stretch")
 
         with col2:
             # User growth pie chart
@@ -121,7 +121,7 @@ try:
                 color_discrete_sequence=['#8B5CF6', '#EC4899', '#E5E7EB']
             )
             fig_user_pie.update_layout(height=300)
-            st.plotly_chart(fig_user_pie, use_container_width=True)
+            st.plotly_chart(fig_user_pie, width="stretch")
 
         st.divider()
 
@@ -183,7 +183,7 @@ try:
                     color_continuous_scale='Purples'
                 )
                 fig_stats.update_layout(showlegend=False, height=300)
-                st.plotly_chart(fig_stats, use_container_width=True)
+                st.plotly_chart(fig_stats, width="stretch")
 
             with col2:
                 # Zap volume indicator
@@ -195,7 +195,7 @@ try:
                     number={'suffix': " sats", 'font': {'size': 40}},
                 ))
                 fig_zap_volume.update_layout(height=300)
-                st.plotly_chart(fig_zap_volume, use_container_width=True)
+                st.plotly_chart(fig_zap_volume, width="stretch")
 
         st.divider()
 
@@ -213,7 +213,7 @@ try:
                 number={'font': {'size': 50}},
             ))
             fig_events.update_layout(height=250)
-            st.plotly_chart(fig_events, use_container_width=True)
+            st.plotly_chart(fig_events, width="stretch")
 
         with col2:
             # Notes specific
@@ -225,7 +225,7 @@ try:
                 number={'font': {'size': 50}},
             ))
             fig_notes.update_layout(height=250)
-            st.plotly_chart(fig_notes, use_container_width=True)
+            st.plotly_chart(fig_notes, width="stretch")
 
         with col3:
             # Event rate
@@ -237,7 +237,7 @@ try:
                 number={'suffix': " eps", 'font': {'size': 50}},
             ))
             fig_rate.update_layout(height=250)
-            st.plotly_chart(fig_rate, use_container_width=True)
+            st.plotly_chart(fig_rate, width="stretch")
 
         st.divider()
 
@@ -266,7 +266,7 @@ try:
                 color_discrete_sequence=['#8B5CF6', '#EC4899', '#F59E0B', '#10B981']
             )
             fig_timeline.update_layout(height=400, hovermode='x unified')
-            st.plotly_chart(fig_timeline, use_container_width=True)
+            st.plotly_chart(fig_timeline, width="stretch")
 
         # Network Health Summary
         st.divider()

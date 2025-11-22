@@ -109,7 +109,7 @@ try:
                     height=400
                 )
 
-                st.plotly_chart(fig_timeline, use_container_width=True)
+                st.plotly_chart(fig_timeline, width="stretch")
 
             with col2:
                 # Summary stats
@@ -135,7 +135,7 @@ try:
                     color_discrete_sequence=['#8B5CF6', '#EC4899', '#F59E0B', '#10B981']
                 )
                 fig_pie.update_layout(height=200, showlegend=True, margin=dict(t=30, b=0))
-                st.plotly_chart(fig_pie, use_container_width=True)
+                st.plotly_chart(fig_pie, width="stretch")
 
             # Individual event type trends
             col1, col2 = st.columns(2)
@@ -150,7 +150,7 @@ try:
                 )
                 fig_notes.update_traces(line_color='#8B5CF6', line_width=3)
                 fig_notes.update_layout(height=250, yaxis_title='Count')
-                st.plotly_chart(fig_notes, use_container_width=True)
+                st.plotly_chart(fig_notes, width="stretch")
 
             with col2:
                 fig_zaps = px.line(
@@ -162,7 +162,7 @@ try:
                 )
                 fig_zaps.update_traces(line_color='#F59E0B', line_width=3)
                 fig_zaps.update_layout(height=250, yaxis_title='Count')
-                st.plotly_chart(fig_zaps, use_container_width=True)
+                st.plotly_chart(fig_zaps, width="stretch")
 
         else:
             st.info("No activity data available for this time range.")
@@ -204,7 +204,7 @@ try:
                 color_discrete_sequence=['#8B5CF6', '#EC4899']
             )
             fig_users.update_layout(height=350, hovermode='x unified')
-            st.plotly_chart(fig_users, use_container_width=True)
+            st.plotly_chart(fig_users, width="stretch")
 
             col1, col2 = st.columns(2)
 
@@ -218,7 +218,7 @@ try:
                     color_discrete_sequence=['#8B5CF6']
                 )
                 fig_events.update_layout(height=300, yaxis_title='Events (24h)')
-                st.plotly_chart(fig_events, use_container_width=True)
+                st.plotly_chart(fig_events, width="stretch")
 
             with col2:
                 # Sats trend
@@ -230,7 +230,7 @@ try:
                     color_discrete_sequence=['#F59E0B']
                 )
                 fig_sats.update_layout(height=300, yaxis_title='Sats (24h)')
-                st.plotly_chart(fig_sats, use_container_width=True)
+                st.plotly_chart(fig_sats, width="stretch")
 
         else:
             st.info("No historical network stats available.")
@@ -300,7 +300,7 @@ try:
                     }
                 ))
                 fig_growth.update_layout(height=250)
-                st.plotly_chart(fig_growth, use_container_width=True)
+                st.plotly_chart(fig_growth, width="stretch")
 
             with col2:
                 activity_rate = (overview['events']['events_1h'] / max(overview['users']['active_1h'], 1))
@@ -318,7 +318,7 @@ try:
                     }
                 ))
                 fig_activity.update_layout(height=250)
-                st.plotly_chart(fig_activity, use_container_width=True)
+                st.plotly_chart(fig_activity, width="stretch")
 
             with col3:
                 engagement = (overview['zaps']['zaps_24h'] / max(overview['events']['notes_24h'], 1)) * 100
@@ -336,7 +336,7 @@ try:
                     }
                 ))
                 fig_engagement.update_layout(height=250)
-                st.plotly_chart(fig_engagement, use_container_width=True)
+                st.plotly_chart(fig_engagement, width="stretch")
 
 except Exception as e:
     st.error(f"Error loading network data: {str(e)}")
