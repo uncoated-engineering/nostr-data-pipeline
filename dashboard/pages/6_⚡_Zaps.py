@@ -88,7 +88,7 @@ try:
                     color_continuous_scale='YlOrRd'
                 )
                 fig_dist.update_layout(height=350)
-                st.plotly_chart(fig_dist, use_container_width=True)
+                st.plotly_chart(fig_dist, width="stretch")
 
             with col2:
                 # Key stats as indicators
@@ -126,7 +126,7 @@ try:
                 ))
 
                 fig_stats.update_layout(height=350)
-                st.plotly_chart(fig_stats, use_container_width=True)
+                st.plotly_chart(fig_stats, width="stretch")
 
         st.divider()
 
@@ -167,7 +167,7 @@ try:
                     color_discrete_sequence=['#F59E0B']
                 )
                 fig_count.update_layout(height=300)
-                st.plotly_chart(fig_count, use_container_width=True)
+                st.plotly_chart(fig_count, width="stretch")
 
             with col2:
                 fig_sats = px.area(
@@ -178,7 +178,7 @@ try:
                     color_discrete_sequence=['#8B5CF6']
                 )
                 fig_sats.update_layout(height=300)
-                st.plotly_chart(fig_sats, use_container_width=True)
+                st.plotly_chart(fig_sats, width="stretch")
 
         st.divider()
 
@@ -223,7 +223,7 @@ try:
                     color_continuous_scale='Oranges'
                 )
                 fig_zappers.update_layout(yaxis={'categoryorder': 'total ascending'}, height=350)
-                st.plotly_chart(fig_zappers, use_container_width=True)
+                st.plotly_chart(fig_zappers, width="stretch")
 
         with col2:
             st.subheader("🎁 Top Recipients")
@@ -262,7 +262,7 @@ try:
                     color_continuous_scale='Purples'
                 )
                 fig_recipients.update_layout(yaxis={'categoryorder': 'total ascending'}, height=350)
-                st.plotly_chart(fig_recipients, use_container_width=True)
+                st.plotly_chart(fig_recipients, width="stretch")
 
         st.divider()
 
@@ -288,7 +288,7 @@ try:
                 color_discrete_sequence=['#FDE68A', '#FCD34D', '#FBBF24', '#F59E0B']
             )
             fig_categories.update_layout(height=400)
-            st.plotly_chart(fig_categories, use_container_width=True)
+            st.plotly_chart(fig_categories, width="stretch")
 
 except Exception as e:
     st.error(f"Error loading zap data: {str(e)}")

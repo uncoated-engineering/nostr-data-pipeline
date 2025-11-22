@@ -71,7 +71,7 @@ try:
 
             st.dataframe(
                 display_df,
-                use_container_width=True,
+                width="stretch",
                 hide_index=True,
                 column_config={
                     "Latency (ms)": st.column_config.NumberColumn(format="%.0f"),
@@ -99,7 +99,7 @@ try:
                         color_continuous_scale='RdYlGn_r'
                     )
                     fig_latency.update_layout(height=400, xaxis_tickangle=-45)
-                    st.plotly_chart(fig_latency, use_container_width=True)
+                    st.plotly_chart(fig_latency, width="stretch")
 
             with col2:
                 # Event distribution
@@ -110,7 +110,7 @@ try:
                     title='Event Distribution by Relay'
                 )
                 fig_events.update_layout(height=400)
-                st.plotly_chart(fig_events, use_container_width=True)
+                st.plotly_chart(fig_events, width="stretch")
 
             # Performance matrix
             st.subheader("📈 Performance Matrix")
@@ -132,7 +132,7 @@ try:
                 color_discrete_map={True: '#10B981', False: '#EF4444'}
             )
             fig_scatter.update_layout(height=400)
-            st.plotly_chart(fig_scatter, use_container_width=True)
+            st.plotly_chart(fig_scatter, width="stretch")
 
             # Health scores
             st.subheader("💚 Health Scores")
@@ -177,7 +177,7 @@ try:
                             }
                         ))
                         fig_health.update_layout(height=200)
-                        st.plotly_chart(fig_health, use_container_width=True)
+                        st.plotly_chart(fig_health, width="stretch")
 
         else:
             st.warning("No relay health data available yet.")

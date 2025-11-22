@@ -82,7 +82,7 @@ try:
                                 'Authors: %{customdata[1]}<br>' +
                                 'Zaps: %{customdata[2]}<extra></extra>'
                 )
-                st.plotly_chart(fig_trending, use_container_width=True)
+                st.plotly_chart(fig_trending, width="stretch")
 
             with col2:
                 # Treemap of hashtag mentions
@@ -103,7 +103,7 @@ try:
                                 'Authors: %{customdata[0]}<br>' +
                                 'Zaps: %{customdata[1]}<extra></extra>'
                 )
-                st.plotly_chart(fig_tree, use_container_width=True)
+                st.plotly_chart(fig_tree, width="stretch")
 
             # Trending hashtags table
             st.subheader("📋 Detailed Trending Hashtags")
@@ -118,7 +118,7 @@ try:
             # Style the dataframe
             st.dataframe(
                 display_df,
-                use_container_width=True,
+                width="stretch",
                 hide_index=True,
                 column_config={
                     "Rank": st.column_config.NumberColumn(format="%d"),
@@ -156,7 +156,7 @@ try:
                             'Score: %{marker.color:.1f}<extra></extra>'
             )
             fig_scatter.update_layout(height=400)
-            st.plotly_chart(fig_scatter, use_container_width=True)
+            st.plotly_chart(fig_scatter, width="stretch")
 
         else:
             st.info("No trending hashtags found in this time window.")
@@ -200,7 +200,7 @@ try:
                                 'Replies: %{customdata[1]}<br>' +
                                 'Reposts: %{customdata[2]}<extra></extra>'
                 )
-                st.plotly_chart(fig_content, use_container_width=True)
+                st.plotly_chart(fig_content, width="stretch")
 
             with col2:
                 # Pie chart of engagement types
@@ -221,7 +221,7 @@ try:
                     color_discrete_sequence=['#F59E0B', '#8B5CF6', '#EC4899']
                 )
                 fig_engagement.update_layout(height=400)
-                st.plotly_chart(fig_engagement, use_container_width=True)
+                st.plotly_chart(fig_engagement, width="stretch")
 
             # Content details table
             st.subheader("📋 Top Content Details")
@@ -232,7 +232,7 @@ try:
 
             st.dataframe(
                 display_content,
-                use_container_width=True,
+                width="stretch",
                 hide_index=True,
                 column_config={
                     "Event ID": st.column_config.TextColumn(width="medium"),
@@ -273,7 +273,7 @@ try:
                             'Virality: %{y:.1f}<br>' +
                             'Sats: %{marker.size:,.0f}<extra></extra>'
             )
-            st.plotly_chart(fig_virality, use_container_width=True)
+            st.plotly_chart(fig_virality, width="stretch")
 
         else:
             st.info("No zapped content found in this time window.")
