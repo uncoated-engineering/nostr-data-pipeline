@@ -259,39 +259,40 @@ class EventProcessor:
 
         return reply_event
 
+    # Regex to parse BOLT11 amount: lnbc<amount><multiplier>1<data>
+    BOLT11_AMOUNT_PATTERN = re.compile(r"^lnbc(\d+)([munp])?1", re.IGNORECASE)
+
     def _parse_bolt11_amount(self, bolt11: Optional[str]) -> Optional[int]:
-        """Parse amount from lightning invoice."""
+        """Parse amount from lightning invoice.
+
+        BOLT11 format: lnbc<amount><multiplier>1<data>
+        Where multiplier is one of: m (milli), u (micro), n (nano), p (pico)
+        """
         if not bolt11:
             return None
 
         try:
-            # Simple parsing - look for amount in bolt11
-            # Format: lnbc<amount><multiplier>
-            bolt11_lower = bolt11.lower()
-            if not bolt11_lower.startswith("lnbc"):
+            match = self.BOLT11_AMOUNT_PATTERN.match(bolt11.lower())
+            if not match:
                 return None
 
-            # Extract amount and multiplier
-            amount_str = bolt11_lower[4:].split("1")[0]
-            if not amount_str:
-                return None
+            amount = float(match.group(1))
+            multiplier = match.group(2)
 
-            # Get multiplier
-            multiplier_char = amount_str[-1]
+            # BOLT11 amount multipliers to convert to millisatoshis
+            # 1 BTC = 100,000,000 sats = 100,000,000,000 msats (10^11)
             multipliers = {
-                "m": 100_000,  # milli-bitcoin = 100,000 msats
-                "u": 100,  # micro-bitcoin = 100 msats
-                "n": 0.1,  # nano-bitcoin = 0.1 msats
-                "p": 0.0001,  # pico-bitcoin = 0.0001 msats
+                "m": 100_000_000,  # milli-bitcoin (10^-3 BTC) = 10^8 msats
+                "u": 100_000,  # micro-bitcoin (10^-6 BTC) = 10^5 msats
+                "n": 100,  # nano-bitcoin (10^-9 BTC) = 10^2 msats
+                "p": 0.1,  # pico-bitcoin (10^-12 BTC) = 10^-1 msats
             }
 
-            if multiplier_char in multipliers:
-                amount = float(amount_str[:-1])
-                return int(amount * multipliers[multiplier_char])
+            if multiplier:
+                return int(amount * multipliers[multiplier])
             else:
-                # No multiplier, amount is in bitcoin
-                amount = float(amount_str)
-                return int(amount * 100_000_000_000)  # btc to msats
+                # No multiplier means amount is in BTC
+                return int(amount * 100_000_000_000)
 
         except (ValueError, IndexError):
             return None

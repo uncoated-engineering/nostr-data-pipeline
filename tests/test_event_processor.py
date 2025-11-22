@@ -54,13 +54,23 @@ def test_extract_hashtags(processor):
 
 def test_parse_bolt11_amount(processor):
     """Test parsing bolt11 invoice amounts."""
-    # This is a simplified test - real bolt11 parsing is complex
-    bolt11 = "lnbc1000m1..."  # 1000 milli-bitcoin
+    # Test micro-bitcoin (common for zaps)
+    # 20u = 20 micro-bitcoin = 2000 sats = 2,000,000 msats
+    bolt11_micro = "lnbc20u1pjexampledata"
+    amount_micro = processor._parse_bolt11_amount(bolt11_micro)
+    assert amount_micro == 2_000_000  # 2000 sats in msats
 
-    amount = processor._parse_bolt11_amount(bolt11)
+    # Test milli-bitcoin
+    # 1m = 1 milli-bitcoin = 100,000 sats = 100,000,000 msats
+    bolt11_milli = "lnbc1m1pjexampledata"
+    amount_milli = processor._parse_bolt11_amount(bolt11_milli)
+    assert amount_milli == 100_000_000  # 100,000 sats in msats
 
-    # 1000m = 100,000,000 msats
-    assert amount == 100_000_000
+    # Test nano-bitcoin (small zaps)
+    # 1000n = 1000 nano-bitcoin = 0.1 sats = 100 msats * 1000 = 100,000 msats
+    bolt11_nano = "lnbc1000n1pjexampledata"
+    amount_nano = processor._parse_bolt11_amount(bolt11_nano)
+    assert amount_nano == 100_000  # 100 sats in msats
 
 
 def test_check_media_urls(processor):
