@@ -31,6 +31,12 @@ class EventLoader:
     def save_event(self, session: Session, event_data: Dict[str, Any]) -> bool:
         """Save a raw Nostr event."""
         try:
+            # Check if event already exists (fast lookup by primary key)
+            existing = session.get(NostrEvent, event_data["id"])
+            if existing:
+                # Event already exists, skip
+                return True
+
             event = NostrEvent(
                 id=event_data["id"],
                 pubkey=event_data["pubkey"],
@@ -44,9 +50,7 @@ class EventLoader:
                 processed=False,
             )
 
-            # Use INSERT ... ON CONFLICT DO NOTHING for PostgreSQL
-            # For SQLite, just try to insert and ignore duplicates
-            session.merge(event)
+            session.add(event)
             return True
 
         except Exception as e:

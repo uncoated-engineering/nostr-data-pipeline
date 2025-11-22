@@ -1,7 +1,7 @@
 """Configuration management for Nostr pipeline."""
 
-from typing import List, Union
-from pydantic import Field, field_validator
+from typing import List
+from pydantic import Field, computed_field, AliasChoices
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -15,26 +15,18 @@ class Settings(BaseSettings):
         extra="ignore",
     )
 
-    # Nostr Configuration
-    nostr_relays: List[str] = Field(
-        default=[
-            "wss://relay.damus.io",
-            "wss://nos.lol",
-            "wss://relay.nostr.band",
-            "wss://nostr.wine",
-            "wss://relay.snort.social",
-        ],
-        description="List of Nostr relay WebSocket URLs",
+    # Nostr Configuration - stored as comma-separated string to avoid JSON parsing
+    nostr_relays_csv: str = Field(
+        default="wss://relay.damus.io,wss://nos.lol,wss://relay.nostr.band,wss://nostr.wine,wss://relay.snort.social",
+        validation_alias=AliasChoices("NOSTR_RELAYS", "nostr_relays"),
+        description="Comma-separated list of Nostr relay WebSocket URLs",
     )
 
-    @field_validator('nostr_relays', mode='before')
-    @classmethod
-    def parse_relay_list(cls, v: Union[str, List[str]]) -> List[str]:
-        """Parse comma-separated relay URLs or return list as-is."""
-        if isinstance(v, str):
-            # Split by comma and strip whitespace
-            return [relay.strip() for relay in v.split(',') if relay.strip()]
-        return v
+    @computed_field
+    @property
+    def nostr_relays(self) -> List[str]:
+        """Parse comma-separated relay URLs into a list."""
+        return [relay.strip() for relay in self.nostr_relays_csv.split(',') if relay.strip()]
 
     # Database Configuration
     database_url: str = Field(

@@ -199,8 +199,19 @@ class NostrPipeline:
 
         self.log.debug("processing_batch", size=len(batch))
 
+        # Deduplicate events by ID (same event can arrive from multiple relays)
+        seen_ids = set()
+        unique_batch = []
+        for event, relay_url in batch:
+            event_id = event.get("id")
+            if event_id and event_id not in seen_ids:
+                seen_ids.add(event_id)
+                unique_batch.append((event, relay_url))
+
+        self.log.debug("deduplicated_batch", original=len(batch), unique=len(unique_batch))
+
         with self.db_manager.get_session() as session:
-            for event, relay_url in batch:
+            for event, relay_url in unique_batch:
                 try:
                     # Process event
                     processed = self.event_processor.process_event(event, relay_url)
