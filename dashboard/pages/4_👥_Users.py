@@ -156,7 +156,7 @@ try:
                     "Avg Virality": st.column_config.ProgressColumn(
                         format="%.2f",
                         min_value=0,
-                        max_value=creators_df['Avg Virality'].max()
+                        max_value=float(creators_df['Avg Virality'].max()),
                     ),
                 }
             )
